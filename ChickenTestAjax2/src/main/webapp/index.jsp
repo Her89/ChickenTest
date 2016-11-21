@@ -7,13 +7,24 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Farm administration</title>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/jquery.i18n.properties.js"></script>
+	
 </head>
 <body>
 
+<br>
+<a href="<%=request.getContextPath()%>/Farms/?language=en">Go to Farm List</a>
+<br>
+<br>
+<br>
 
-<a href="<%=request.getContextPath()%>/Farms/">Go to Farm List</a>
+<a href="<%=request.getContextPath()%>/Farms/?language=es">Ver Lista de Granjas</a>
 
 
+<script>
+</script>
 
 </body>
 </html>

@@ -79,7 +79,22 @@
 	<bean id="chickenDAO" class="com.accenture.Garcia.Hernan.ChickenTest.data.ChickenDAO" />
 	<bean id="eggDAO" class="com.accenture.Garcia.Hernan.ChickenTest.data.EggDAO" />
 	
+		 <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+<property name="basename" value="/resources/messages/messages"/>
+<property name="defaultEncoding" value="UTF-8"/>
+</bean>
+	  <mvc:interceptors>
+	 <bean id="localeChangeInterceptor"
+	class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+	<property name="paramName" value="language" />
+</bean>
+  </mvc:interceptors>
+
+<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+    <property name="defaultLocale" value="en" />
+</bean>
 	
+
 </beans>
 
 
