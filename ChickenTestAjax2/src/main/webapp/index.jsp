@@ -7,6 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Farm administration</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/estilo.css"/>
+
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/jquery.i18n.properties.js"></script>

@@ -2,11 +2,22 @@
 var url = window.location.href.toString();
 var parts = url.split("/");
 var chickenId = parts[parts.length-1];
+var langParts = url.split("=");
+var lang = langParts[1];
 
 $(document).ready(function(){
 	 $.ajaxSetup({ cache: false });
+	 
+	 jQuery.i18n.properties({
+		    name: 'messages', 
+		    path: contextPath+'/resources/messages/', 
+		    mode: 'both',
+		    language: lang
+		     
+		});
 
-
+	$("table").hide();
+	
 	loadList();	
 	
 	$("#FormDiv").hide();
@@ -29,7 +40,7 @@ $(document).ready(function(){
 	
 	$("#new").on("click", function(){
 		$("#Form").removeClass("Update").addClass("New");
-		$("#title").text("New Egg");
+		$("#title").text($.i18n.prop('NewEgg'));
 		$("#name").val("");
 		$("#FormDiv").show();
 
@@ -102,15 +113,7 @@ $(document).ready(function(){
 			}}})
 		
 		
-		
-		
-		
-		
-	
-	$("#reload").on("click", function(){
-		loadList();
-					
-		});
+
 	
 	$("#name").blur(function(){
 		
@@ -122,7 +125,7 @@ $(document).ready(function(){
 	
 	$("table").on("click",".update", function(){
 		$("#Form").removeClass("New").addClass("Update");
-		$("#title").text("Modify Egg");
+		$("#title").text($.i18n.prop('ModifyEgg'));
 
 		$("#FormDiv").show();
 		
@@ -141,7 +144,7 @@ $(document).ready(function(){
 		
 		if(name.length >15){
 				
-			$("#nameError").html("Name must be less than 15 characters");
+			$("#nameError").html($.i18n.prop('eColorLength'));
 			$("#nameError").show();
 			
 			return false;
@@ -149,7 +152,7 @@ $(document).ready(function(){
 		
 		if ($.trim(name).length == 0) {
 				  
-				  $("#nameError").html("Name can't be empty");
+				  $("#nameError").html($.i18n.prop('eColorNull'));
 					$("#nameError").show();
 					
 					return false;
@@ -172,7 +175,24 @@ function loadList(){
 	$.getJSON(url,
 		
 		function(data){
-		fillTable(data);
+		var chickenUrl = contextPath+"/Chickens/"+data.farm.id+"?language="+lang;
+		$('#return').attr("href",chickenUrl);
+		
+		if(data.eggList.length == 0){
+			$("table").hide();
+
+			$("#noInfo").html($.i18n.prop('eNoInfo'));
+			$("#noInfo").show();
+			
+		}else{
+			fillTable(data);
+			$("table").show();
+			$("#noInfo").hide();
+			
+			
+		}
+		
+	
 		
 		
 	})
@@ -188,10 +208,10 @@ function fillTable (data){
 						$("<td>").append( data.eggList[index].color )
 						)
 				.append(
-						$("<td>").append( "<button class=\"update\"  name=\""+data.eggList[index].color+"\" id=\""+ data.eggList[index].id +"\"> Update </button> ")
+						$("<td>").append( "<button class=\"update\"  name=\""+data.eggList[index].color+"\" id=\""+ data.eggList[index].id +"\"> "+$.i18n.prop('Update')+" </button> ")
 						)
 				.append(
-						$("<td>").append( "<button class=\"delete\" id=\""+ data.eggList[index].id +"\"> Delete </button> ")
+						$("<td>").append( "<button class=\"delete\" id=\""+ data.eggList[index].id +"\"> "+$.i18n.prop('Delete')+" </button> ")
 						))
 	}
 }

@@ -1,6 +1,6 @@
 var url = window.location.href.toString();
-var parts = url.split("=");
-var lang = parts[1];
+var langParts = url.split("=");
+var lang = langParts[1];
 
 $(document).ready(function(){
 
@@ -177,13 +177,13 @@ function fillTable (data){
 						$("<td>").append( data[index].name )
 						)
 				.append(
-						$('<td>').append( "<a href=\"../Chickens/"+ data[index].id +"\"> "+$.i18n.prop('a.List')+" </a> ")
+						$('<td>').append( "<a href=\"../Chickens/"+ data[index].id +"?language="+lang+"\">"+$.i18n.prop('List')+" </a> ")
 						)
 				.append(
-						$("<td>").append( "<button class=\"update\" name=\""+data[index].name+"\" id=\""+ data[index].id +"\">"+$.i18n.prop('th.Update')+" </button> ")
+						$("<td>").append( "<button class=\"update\" name=\""+data[index].name+"\" id=\""+ data[index].id +"\">"+$.i18n.prop('Update')+" </button> ")
 						)
 				.append(
-						$("<td>").append( "<button class=\"delete\" id=\""+ data[index].id +"\"> "+$.i18n.prop('th.Delete')+" </button> ")
+						$("<td>").append( "<button class=\"delete\" id=\""+ data[index].id +"\"> "+$.i18n.prop('Delete')+" </button> ")
 						))
 	}
 }

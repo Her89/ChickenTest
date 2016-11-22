@@ -2,10 +2,20 @@
 var url = window.location.href.toString();
 var parts = url.split("/");
 var farmId = parts[parts.length-1];
+var langParts = url.split("=");
+var lang = langParts[1];
 
 $(document).ready(function(){
 
 	 $.ajaxSetup({ cache: false });
+	 
+	 jQuery.i18n.properties({
+		    name: 'messages', 
+		    path: contextPath+'/resources/messages/', 
+		    mode: 'both',
+		    language: lang
+		     
+		});
 
 	loadList();	
 	
@@ -29,7 +39,7 @@ $(document).ready(function(){
 	
 	$("#new").on("click", function(){
 		$("#Form").removeClass("Update").addClass("New");
-		$("#title").text("New Chicken");
+		$("#title").text($.i18n.prop('NewChicken'));
 		$("#name").val("");
 		$("#FormDiv").show();
 
@@ -102,16 +112,6 @@ $(document).ready(function(){
 			}}})
 		
 		
-	
-		
-		
-		
-	
-	$("#reload").on("click", function(){
-		loadList();
-					
-		});
-	
 	$("#name").blur(function(){
 		
 		isNameOk();
@@ -122,7 +122,7 @@ $(document).ready(function(){
 	
 	$("table").on("click",".update", function(){
 		$("#Form").removeClass("New").addClass("Update");
-		$("#title").text("Modify Chicken");
+		$("#title").text($.i18n.prop('ModifyChicken'));
 
 		$("#FormDiv").show();
 		
@@ -134,33 +134,33 @@ $(document).ready(function(){
 	
 });	
 	
+function isNameOk(){
 	
-	function isNameOk(){
-		
-		var name = $("#name").val();
-		
-		if(name.length >15){
-				
-			$("#nameError").html("Name must be less than 15 characters");
-			$("#nameError").show();
+	var name = $("#name").val();
+	
+	if(name.length >15){
 			
-			return false;
-			}else{
+		$("#nameError").html($.i18n.prop('eNameLength'));
+		$("#nameError").show();
 		
-		if ($.trim(name).length == 0) {
-				  
-				  $("#nameError").html("Name can't be empty");
-					$("#nameError").show();
-					
-					return false;
-				  			  
-				  
-			  }else{
-			$("#nameError").hide();
-			return true;
-		}
-		
-		}}
+		return false;
+		}else{
+	
+			
+	if ($.trim(name).length == 0) {
+			  
+			  $("#nameError").html($.i18n.prop('eNameNull'));
+				$("#nameError").show();
+				
+				return false;
+			  			  
+			  
+		  }else{
+		$("#nameError").hide();
+		return true;
+	}
+	
+	}}
 		
 		
 
@@ -173,6 +173,9 @@ function loadList(){
 		
 		function(data){
 		fillTable(data);
+		
+		$('#titleTop').html($.i18n.prop('Farm')+": "+data.name);
+		
 		
 		
 	})
@@ -191,13 +194,13 @@ function fillTable (data){
 						$("<td>").append( data.chickenList[index].eggList.length )
 						)
 				.append(
-						$('<td>').append( "<a href=\"../Eggs/"+ data.chickenList[index].id +"\"> View Eggs </a> ")
+						$('<td>').append( "<a href=\"../Eggs/"+ data.chickenList[index].id +"?language="+lang+"\">"+$.i18n.prop('List')+" </a> ")
 						)
 				.append(
-						$("<td>").append( "<button class=\"update\"  name=\""+data.chickenList[index].name+"\" id=\""+ data.chickenList[index].id +"\"> Update </button> ")
+						$("<td>").append( "<button class=\"update\"  name=\""+data.chickenList[index].name+"\" id=\""+ data.chickenList[index].id +"\"> "+$.i18n.prop('Update')+" </button> ")
 						)
 				.append(
-						$("<td>").append( "<button class=\"delete\" id=\""+ data.chickenList[index].id +"\"> Delete </button> ")
+						$("<td>").append( "<button class=\"delete\" id=\""+ data.chickenList[index].id +"\"> "+$.i18n.prop('Delete')+" </button> ")
 						))
 	}
 }
